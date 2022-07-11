@@ -1,0 +1,29 @@
+<%= form_with model: [:admin, @movie] do |f| %>
+  <div class = "form-filed">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label :hardest %>
+    <%= f.file_field :hardest %>
+  </div>
+  <div>
+    <%= f.label :harder %>
+    <%= f.file_field :harder %>
+  </div>
+  <div>
+    <%= f.label :hard %>
+    <%= f.file_field :hard %>
+  </div>
+  <div>
+    <%= f.label :easy %>
+    <%= f.file_field :easy %>
+  </div>
+  <div>
+    <%= f.label :easiest %>
+    <%= f.file_field :easiest %>
+  </div>
+  <div>
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>

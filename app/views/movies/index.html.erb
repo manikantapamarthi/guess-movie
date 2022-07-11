@@ -1,0 +1,28 @@
+<div class=container data-controller="main">
+  <h1>Cheppuko</h1>
+  <i class="fa-thin fa-house-signal"></i>
+  <div class="header-icons">
+    <span class="chart-icon">Stats</span> |
+    <!-- <i class="fa-regular fa-chart-simple"></i> 
+    <i class="fa-regular fa-circle-info"></i> -->
+    <span class="rules-icon">How to play</span>
+  </div>
+  <%# @movies.each do |m| %>
+    <div class="image-frame" data-movie="<%= @movie.id %>" data-main-target="movie">
+      <%= render partial: "movies/image", locals: {image: @image, movie: @movie} %>
+    </div>
+  <%# end %>
+
+  <div class="hit-buttons margin-bottom-10 margin-top-10" data-main-target="skip">
+    
+  </div>
+
+  <div class="search-field margin-top-10">
+    <div class="search-movie">
+      <input type="text", placeholder="Search movie">
+    </div>
+    <div class="skip">
+      <button class="btn" data-action="click->main#skip">Skip</button>
+    </div>
+  </div>
+</div>
