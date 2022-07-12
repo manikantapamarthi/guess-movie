@@ -59,3 +59,8 @@ body {
 .hit-buttons a:hover {
   border: 1px solid gray;
 }
+
+.info-1, .info-2{
+  display: flex;
+  gap: 10px;
+}
