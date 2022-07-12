@@ -4,14 +4,14 @@ export default class extends Controller {
   static targets = ["skip", "buttoncount", "movie"]
 
   connect(){
-    let movie = this.movieTarget.dataset.movie
+    this.movie = this.movieTarget.dataset.movie
     let buttons = localStorage.getItem("buttons")
     this.count = buttons ? buttons : 1 
     if (buttons){
       for(let i = 0; i < buttons; i++){
         this.skipTarget.innerHTML += `<a data-button=${i + 1}
-                                   href=/movies/get_frame?b=${i + 1}&format=turbo_stream
-                                   data-turbo-frame=movie_${movie}
+                                      href=/movies/get_frame?b=${i + 1}&format=turbo_stream
+                                   data-turbo-frame=movie_${this.movie}
                                     > 
                                       ${i + 1}
                                     </a>`
@@ -37,9 +37,9 @@ export default class extends Controller {
   
   addButton(count){
     this.skipTarget.innerHTML += `<a data-button=${count} 
-                                data-action="click->main#next"
-                               movies/get_frame
-                                >
+                                    href=/movies/get_frame?b=${count}&format=turbo_stream
+                                    data-turbo-frame=movie_${this.movie}
+                                  >
                                   ${count}
                                 </a>`
   }
