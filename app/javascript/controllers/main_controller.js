@@ -1,13 +1,14 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["skip", "buttoncount", "movie"]
+  static targets = ["skip", "buttoncount", "movie", "movieguess"]
 
   connect(){
     this.movie = this.movieTarget.dataset.movie
     let buttons = localStorage.getItem("buttons")
     this.count = buttons ? buttons : 1 
     if (buttons){
+      this.addSkipped(buttons)
       for(let i = 0; i < buttons; i++){
         this.skipTarget.innerHTML += `<a data-button=${i + 1}
                                       href=/movies/get_frame?b=${i + 1}&format=turbo_stream
@@ -31,6 +32,7 @@ export default class extends Controller {
     if (this.count < maxCount){
       this.increment()
       this.addButton(this.count)
+      this.addSkipped()
     }
     localStorage.setItem("buttons", this.count)
   }
@@ -42,6 +44,21 @@ export default class extends Controller {
                                   >
                                   ${count}
                                 </a>`
+  }
+
+  addSkipped(buttons){
+    let skippedHtml = `<div class="wm-guess">
+        <span class="text-danger fas fa-x"></span>
+        <span class="text-danger skipped-text">Skipped</span>
+      </div>`
+
+    if(buttons) {
+      for(let i = 0; i < buttons; i++){
+        this.movieguessTarget.innerHTML += skippedHtml
+      }
+    } else {
+      this.movieguessTarget.innerHTML += skippedHtml
+    }
   }
 
   increment(){

@@ -2,7 +2,7 @@ class MoviesController < ApplicationController
   
   def index
     @movie = Movie.last
-    @image = @movie.hardest
+    @image = @movie&.hardest
   end
 
   def get_frame
