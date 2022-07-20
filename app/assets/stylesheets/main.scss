@@ -1,5 +1,10 @@
+:root {
+  --primary: rgb(15,23,42);
+}
+
+
 body {
-  background-color: rgb(15,23,42);
+  background-color: var(--primary);
   color: #fff
 }
 .container {
@@ -86,4 +91,8 @@ body {
   border-radius: 5px 5px 5px 5px;
   border-left-width: 5px;
   margin-bottom: 5px;
+}
+
+.modal-content {
+  background-color: var(--primary);
 }

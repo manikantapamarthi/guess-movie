@@ -1,0 +1,3 @@
+<% @movie_names.each_with_index do |result, i| %>
+  <li class="list-group-item" role="option" data-autocomplete-value=<%= i + 1%> id="stimulus-autocomplete-option-<%= i + 1%>"><%= result %></li>
+<% end %>

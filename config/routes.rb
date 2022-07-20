@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root "movies#index"
   resources :movies do 
     get 'get_frame', on: :collection
+    get 'search_movie', on: :collection
   end
   namespace :admin do 
     resources :movies

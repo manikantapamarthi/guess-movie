@@ -1,12 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 
+
 export default class extends Controller {
   static targets = ["skip", "buttoncount", "movie", "movieguess"]
+  static value = {guess: Array}
 
   connect(){
     this.movie = this.movieTarget.dataset.movie
     let buttons = localStorage.getItem("buttons")
     this.count = buttons ? buttons : 1 
+    console.log(this.guessValue)
     if (buttons){
       this.addSkipped(buttons)
       for(let i = 0; i < buttons; i++){
@@ -35,6 +38,14 @@ export default class extends Controller {
       this.addSkipped()
     }
     localStorage.setItem("buttons", this.count)
+    // let guess = localStorage.getItem("movieGuess")
+    // if(guess === null){
+    //   let movieguess = []
+    //   movieguess.push("skipped")
+    //   localStorage.setItem("movieGuess", movieguess)
+    // }else{
+    //   guess.push("skipped")
+    // }
   }
   
   addButton(count){
@@ -68,9 +79,7 @@ export default class extends Controller {
   skipbutton(){
     this.skipTarget.innerHTML
   }
-
-  buttonCount(){
+  searchMovies(){
     
   }
-
 }
