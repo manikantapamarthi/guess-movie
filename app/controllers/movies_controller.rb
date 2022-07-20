@@ -26,7 +26,7 @@ class MoviesController < ApplicationController
   end
 
   def search_movie
-    @movie_names = movie_names.select{|m| m.include? "#{params["q"]}"}
+    @movie_names = movie_names.select{|m| m.downcase.include? "#{params["q"]}".downcase}
     render layout: false
   end
 end
