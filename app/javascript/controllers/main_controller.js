@@ -2,9 +2,12 @@ import { Controller } from "@hotwired/stimulus"
 
 
 export default class extends Controller {
-  static targets = ["skip", "buttoncount", "movie", "movieguess", "skipbutton"]
+  static targets = ["skip", "buttoncount", "movie", "movieguess", "skipbutton", "title"]
 
   connect(){
+    document.addEventListener("autocomplete.change", this.autocomplete.bind(this))
+    this.movieName = this.titleTarget.dataset.movie
+    this.titleTarget.remove()
     this.movie = this.movieTarget.dataset.movie
     let buttons = localStorage.getItem("buttons")
     this.count = buttons ? buttons : 1
@@ -59,13 +62,17 @@ export default class extends Controller {
       localStorage.setItem("currentMovieGuess", currentGuess)
     }  
   }
+  // search field autocomplete event
+  autocomplete(e) {
+    let movieMatchHtml = `<div class="wm-guess" style="border: 1px solid green;">
+      <span class="text-success fas fa-check"></span>
+      <span class="text-success skipped-text">${this.movieName}</span>
+    </div>`
 
-  movieGuesstarget(){
-    return this.movieguessTarget.dataset.mguess
-  }
-
-  removeEmptyValue(){
-    return this.movieguessTarget.dataset.mguess.split(",").filter(item => item)
+    let movieMatch = e.detail.value.toLowerCase() === this.movieName.toLowerCase()
+    if(movieMatch){
+      this.movieguessTarget.innerHTML += movieMatchHtml 
+    }
   }
   
   addButton(count){
@@ -78,7 +85,7 @@ export default class extends Controller {
   }
 
   addSkipped(buttons){
-    let skippedHtml = `<div class="wm-guess">
+    let skippedHtml = `<div class="wm-guess" style="border: 1px solid red;">
         <span class="text-danger fas fa-x"></span>
         <span class="text-danger skipped-text">Skipped</span>
       </div>`
@@ -90,6 +97,14 @@ export default class extends Controller {
     } else {
       this.movieguessTarget.innerHTML += skippedHtml
     }
+  }
+
+  movieGuesstarget(){
+    return this.movieguessTarget.dataset.mguess
+  }
+
+  removeEmptyValue(){
+    return this.movieguessTarget.dataset.mguess.split(",").filter(item => item)
   }
 
   increment(){
