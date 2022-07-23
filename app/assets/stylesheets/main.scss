@@ -93,8 +93,14 @@ body {
   // border: 1px solid red;
   padding: 5px 5px;
   border-radius: 5px 5px 5px 5px;
-  border-left-width: 5px;
   margin-bottom: 5px;
+}
+
+.border-green {
+  border: 1px solid green; border-left-width: 5px;
+}
+.border-red {
+  border: 1px solid red; border-left-width: 5px;
 }
 
 .modal-content {
