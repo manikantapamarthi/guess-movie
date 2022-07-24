@@ -2,7 +2,15 @@ import { Controller } from "@hotwired/stimulus"
 
 
 export default class extends Controller {
-  static targets = ["skip", "buttoncount", "movie", "movieguess", "skipbutton", "title"]
+  static targets = ["skip", 
+                    "buttoncount", 
+                    "movie", 
+                    "movieguess", 
+                    "skipbutton", 
+                    "title", 
+                    "nextmovie",
+                    "squares",
+                    "searchfield"]
 
 
   connect(){
@@ -38,21 +46,28 @@ export default class extends Controller {
                                   </a>`
       localStorage.setItem("buttons", 1)
     }
+    
+    let gameStatus = localStorage.getItem("gameStatus")
 
-    if(movieGuess.length === 5) {
-      this.removeSkipButton();
+    if(movieGuess.length === 5 && gameStatus=== "failed") {
+      this.skipbuttonTarget && this.removeSkipButton();
     }
 
     if(movieGuess.length >= 1){
       this.movieguessTarget.dataset.mguess = this.getcurrentMovieGuess()
       // this.addSkipped(movieGuess.length);
     }
-
-    let gameStatus = localStorage.getItem("gameStatus")
     if(gameStatus === "completed") {
-      this.removeSkipButton();
+      this.skipbuttonTarget && this.removeSkipButton();
+      this.searchfieldTarget && this.searchfieldTarget.remove();
       movieGuess && this.addMovieNameButton(movieGuess);
     }
+
+    if(["failed", "completed"].includes(gameStatus)){
+      this.countDownTimer(this.nextmovieTarget)
+    }
+
+    this.addRedGreenSqures(movieGuess)
   }
 
   getGameStatus(){
@@ -102,17 +117,33 @@ export default class extends Controller {
     this.movieguessTarget.dataset.mguess += e.detail.value
     let currentMovieGuess = localStorage.getItem("currentMovieGuess") ? (localStorage.getItem("currentMovieGuess") + `${e.detail.value},`) : `${e.detail.value},`
 
-    localStorage.setItem("currentMovieGuess", currentMovieGuess)
+    let cmg = currentMovieGuess.split(",").filter(item => item)
+    if(cmg.length < 5){
+      localStorage.setItem("currentMovieGuess", currentMovieGuess)
+    }
 
     if(movieMatch){
       this.movieguessTarget.innerHTML += movieMatchHtml
       localStorage.setItem("gameStatus", "completed")
       this.removeSkipButton()
+      this.searchfieldTarget.remove();
       localStorage.setItem("buttons", 5)
       this.addNumbersButton()
+      this.squaresTarget.innerHTML += `<span class="square green"></span>`
     }else {
       this.movieguessTarget.innerHTML += movieMatchHtml
+      this.squaresTarget.innerHTML += `<span class="square red"></span>`
     }
+  }
+
+  addRedGreenSqures(movieGuess){
+    movieGuess.forEach(e => {
+      let movieMatch = e.toLowerCase() === this.movieName.toLowerCase()
+      movieMatch ?
+        (this.squaresTarget.innerHTML += `<span class="square green"></span>`) :
+        (this.squaresTarget.innerHTML += `<span class="square red"></span>`)
+      
+    });
   }
 
   addNumbersButton(){
@@ -199,4 +230,26 @@ export default class extends Controller {
     this.skipbuttonTarget.remove()
   }
 
+  countDownTimer(nextmovie){
+    setInterval(function() {
+      var day = new Date()
+      var hours = 24 - day.getHours();
+      var min = 60 - day.getMinutes();
+      if((min + '').length == 1){
+        min = '0' + min;
+      }
+      var sec = 60 - day.getSeconds();
+      if((sec + '').length == 1){
+            sec = '0' + sec;
+      };
+       nextmovie.innerHTML = `<span>Next Movie in</span> <span>${hours}hrs : ${min}mins : ${sec}secs</span>` 
+    }, 1000)
+  }
+
+  socialIconsLinks(){
+    let url = window.location
+    `<a class="twitter-share-button"
+    href="https://twitter.com/intent/tweet?text=${url}">
+    Tweet</a>`
+  }
 }
