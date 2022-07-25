@@ -14,6 +14,7 @@ export default class extends Controller {
 
 
   connect(){
+    console.log(`Made with ♥ RubyOnRails`)
     document.addEventListener("autocomplete.change", this.autocomplete.bind(this))
     // setting movie name on page load, afterthat removed from dom
     this.movieName = this.titleTarget.dataset.movie
@@ -60,14 +61,16 @@ export default class extends Controller {
     if(gameStatus === "completed") {
       this.skipbuttonTarget && this.removeSkipButton();
       this.searchfieldTarget && this.searchfieldTarget.remove();
-      movieGuess && this.addMovieNameButton(movieGuess);
     }
 
     if(["failed", "completed"].includes(gameStatus)){
       this.countDownTimer(this.nextmovieTarget)
     }
 
-    this.addRedGreenSqures(movieGuess)
+    if(movieGuess){
+      this.addMovieNameButton(movieGuess);
+      this.addRedGreenSqures(movieGuess)
+    }
   }
 
   getGameStatus(){
@@ -91,7 +94,7 @@ export default class extends Controller {
     }
     localStorage.setItem("buttons", this.count)
     // setting currentmovie guess value
-    let mguess = this.movieguessTarget.dataset.mguess ?  this.movieguessTarget.dataset.mguess.split(",").filter(item => item) : this.movieguessTarget.dataset.mguess += "skipped,"
+    let mguess = this.movieguessTarget.dataset.mguess ?  this.movieguessTarget.dataset.mguess.split(",").filter(item => item) : ""
 
     if(mguess.length == maxCount){
       this.removeSkipButton()
@@ -118,7 +121,7 @@ export default class extends Controller {
     let currentMovieGuess = localStorage.getItem("currentMovieGuess") ? (localStorage.getItem("currentMovieGuess") + `${e.detail.value},`) : `${e.detail.value},`
 
     let cmg = currentMovieGuess.split(",").filter(item => item)
-    if(cmg.length < 5){
+    if(cmg.length <= 5){
       localStorage.setItem("currentMovieGuess", currentMovieGuess)
     }
 
@@ -130,6 +133,7 @@ export default class extends Controller {
       localStorage.setItem("buttons", 5)
       this.addNumbersButton()
       this.squaresTarget.innerHTML += `<span class="square green"></span>`
+      countDownTimer(this.nextmovieTarge)
     }else {
       this.movieguessTarget.innerHTML += movieMatchHtml
       this.squaresTarget.innerHTML += `<span class="square red"></span>`
