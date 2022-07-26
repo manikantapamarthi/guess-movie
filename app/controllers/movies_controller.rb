@@ -15,8 +15,8 @@ class MoviesController < ApplicationController
               "4" => movie.easy, 
               "5" => movie.easiest}
               
-    @image = image[params["b"]]          
-    
+    @image = image[params["b"]]
+      
     respond_to do |format|
       format.turbo_stream do 
         render turbo_stream: turbo_stream.replace(movie, partial: "movies/image", locals: {image: @image, movie: movie})

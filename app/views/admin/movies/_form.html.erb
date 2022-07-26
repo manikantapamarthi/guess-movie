@@ -1,29 +1,29 @@
 <%= form_with model: [:admin, @movie] do |f| %>
   <div class = "form-group">
     <%= f.label :title %>
-    <%= f.text_field :title, class: "form-control"%>
+    <%= f.text_field :title, class: "form-control", direct_upload: true%>
   </div>
   <div class = "form-group">
     <%= f.label :hardest %>
-    <%= f.file_field :hardest, class: "form-control" %>
+    <%= f.file_field :hardest, class: "form-control", direct_upload: true %>
   </div>
   <div class = "form-group">
     <%= f.label :harder %>
-    <%= f.file_field :harder, class: "form-control" %>
+    <%= f.file_field :harder, class: "form-control", direct_upload: true %>
   </div>
   <div class = "form-group">
     <%= f.label :hard %>
-    <%= f.file_field :hard, class: "form-control" %>
+    <%= f.file_field :hard, class: "form-control", direct_upload: true %>
   </div>
   <div class = "form-group">
     <%= f.label :easy %>
-    <%= f.file_field :easy, class: "form-control" %>
+    <%= f.file_field :easy, class: "form-control", direct_upload: true %>
   </div>
   <div class = "form-group">
     <%= f.label :easiest %>
-    <%= f.file_field :easiest, class: "form-control" %>
+    <%= f.file_field :easiest, class: "form-control", direct_upload: true %>
   </div>
-  <div class = "form-group">
+  <div class = "form-group text-center mb-10">
     <%= f.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

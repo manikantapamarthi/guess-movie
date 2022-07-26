@@ -11,7 +11,7 @@
     </button>
   </div>
  
-  <div class="image-frame" data-movieid="<%= @movie.id %>" data-main-target="movie">
+  <div class="image-frame" data-movieid="<%= @movie&.id %>" data-main-target="movie">
     <%= render partial: "movies/image", locals: {image: @image, movie: @movie} %>
   </div>
   
