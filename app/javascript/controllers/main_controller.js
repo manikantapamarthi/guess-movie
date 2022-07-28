@@ -137,7 +137,9 @@ export default class extends Controller {
     }
 
     let numberButtons = localStorage.getItem("buttons")
+    
     let buttonCount = parseInt(numberButtons) + 1
+      
 
     if(movieMatch){
       this.movieguessTarget.innerHTML += movieMatchHtml
@@ -152,9 +154,15 @@ export default class extends Controller {
       this.increment()
       this.movieguessTarget.innerHTML += movieMatchHtml
       this.squaresTarget.innerHTML += `<span class="square red"></span>`
+      this.assingButtonNumber(buttonCount);
+      this.addNumbersButton();
+      this.removeSearchSkip(cmg);
+    }
+  }
+
+  assingButtonNumber(buttonCount){
+    if(buttonCount <= 5){
       localStorage.setItem("buttons", buttonCount)
-      this.addNumbersButton()
-      this.removeSearchSkip(cmg)
     }
   }
 
@@ -165,8 +173,9 @@ export default class extends Controller {
 
   removeSearchSkip(cmg){
     if(cmg.length === 5){
-      this.searchfieldTarget && this.searchfieldTarget.remove();
+      localStorage.setItem("gameStatus", "failed")
       this.skipbuttonTarget && this.removeSkipButton()
+      this.searchfieldTarget && this.searchfieldTarget.remove();
       this.addMovieName()
     }
   }
