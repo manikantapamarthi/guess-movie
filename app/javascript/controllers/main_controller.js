@@ -149,6 +149,7 @@ export default class extends Controller {
       localStorage.setItem("buttons", 5)
       this.addNumbersButton()
       this.squaresTarget.innerHTML += `<span class="square green"></span>`
+      this.movienameTarget.innerHTML = `<p>You got it - The answer was <span class="lawngreen">${this.movieName}</span></p>`
       this.countDownTimer(this.nextmovieTarget)
     } else {
       this.increment()
@@ -156,6 +157,7 @@ export default class extends Controller {
       this.squaresTarget.innerHTML += `<span class="square red"></span>`
       this.assingButtonNumber(buttonCount);
       this.addNumbersButton();
+      this.clickOnNextGuess(buttonCount);
       this.removeSearchSkip(cmg);
     }
   }
