@@ -1,4 +1,4 @@
 <% cloud_name = ENV["cloud_name"] %>
 <%= turbo_frame_tag movie do %>
-  <%= cl_image_tag(image.key, size: "450x250", cloud_name: cloud_name) %>
+  <%= image_tag image, size: "450x250" %>
 <% end %>

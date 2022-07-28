@@ -1,6 +1,6 @@
 <div class="search-field mt-10 mb-10" data-main-target="searchfield">
   <div class="search-movie" data-controller="autocomplete" data-autocomplete-url-value="/movies/search_movie" >
-    <input type="text" placeholder="Search movie" class="form-control" data-autocomplete-target="input">
+    <input type="text" placeholder="Search movie" class="form-control" data-autocomplete-target="input" onfocus="this.value=''">
     <!-- data-action="keyup->main#searchMovies" data-main-target="movieSearch" -->
     <ul class="list-group" data-autocomplete-target="results" style="max-height: 10rem; overflow-y: scroll;"></ul>
   </div>

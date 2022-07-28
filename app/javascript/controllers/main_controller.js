@@ -10,7 +10,8 @@ export default class extends Controller {
                     "title", 
                     "nextmovie",
                     "squares",
-                    "searchfield"]
+                    "searchfield",
+                    "moviename"]
 
 
   connect(){
@@ -52,6 +53,8 @@ export default class extends Controller {
 
     if(movieGuess.length === 5 && gameStatus=== "failed") {
       this.skipbuttonTarget && this.removeSkipButton();
+      this.searchfieldTarget && this.searchfieldTarget.remove();
+      this.addMovieName()
     }
 
     if(movieGuess.length >= 1){
@@ -93,16 +96,23 @@ export default class extends Controller {
       this.addButton(this.count)
     }
     localStorage.setItem("buttons", this.count)
-    // setting currentmovie guess value
-    let mguess = this.movieguessTarget.dataset.mguess ?  this.movieguessTarget.dataset.mguess.split(",").filter(item => item) : ""
-
-    if(mguess.length == maxCount){
-      this.removeSkipButton()
+    
+    let movieGuess = localStorage.getItem("currentMovieGuess") ? localStorage.getItem("currentMovieGuess") + "skipped," : "skipped,"
+  
+    localStorage.setItem("currentMovieGuess", movieGuess)
+    
+    let mguess = localStorage.getItem("currentMovieGuess") ? localStorage.getItem("currentMovieGuess").split(",").filter(item => item) : ["skipped"]
+    
+    if(mguess.length === maxCount){
+      this.skipbuttonTarget && this.removeSkipButton()
+      this.searchfieldTarget && this.searchfieldTarget.remove();
       localStorage.setItem("gameStatus", "failed")
+      this.addMovieName()
     } else {
-      let currentGuess = this.movieguessTarget.dataset.mguess += "skipped,"
-      localStorage.setItem("currentMovieGuess", currentGuess)
+      this.squaresTarget.innerHTML += `<span class="square red"></span>`
       this.addSkipbutton()
+      let button = localStorage.getItem("buttons")
+      this.clickOnNextGuess(button);
     }  
   }
   // search field autocomplete event
@@ -117,26 +127,47 @@ export default class extends Controller {
       <span class="text-${color} skipped-text">${e.detail.value ? e.detail.value : this.movieName }</span>
     </div>`
 
-    this.movieguessTarget.dataset.mguess += e.detail.value
+    this.movieguessTarget.dataset.mguess += `${e.detail.value},`
     let currentMovieGuess = localStorage.getItem("currentMovieGuess") ? (localStorage.getItem("currentMovieGuess") + `${e.detail.value},`) : `${e.detail.value},`
 
     let cmg = currentMovieGuess.split(",").filter(item => item)
+    
     if(cmg.length <= 5){
       localStorage.setItem("currentMovieGuess", currentMovieGuess)
     }
 
+    let numberButtons = localStorage.getItem("buttons")
+    let buttonCount = parseInt(numberButtons) + 1
+
     if(movieMatch){
       this.movieguessTarget.innerHTML += movieMatchHtml
       localStorage.setItem("gameStatus", "completed")
-      this.removeSkipButton()
+      this.skipbuttonTarget && this.removeSkipButton()
       this.searchfieldTarget.remove();
       localStorage.setItem("buttons", 5)
       this.addNumbersButton()
       this.squaresTarget.innerHTML += `<span class="square green"></span>`
-      countDownTimer(this.nextmovieTarge)
-    }else {
+      this.countDownTimer(this.nextmovieTarget)
+    } else {
+      this.increment()
       this.movieguessTarget.innerHTML += movieMatchHtml
       this.squaresTarget.innerHTML += `<span class="square red"></span>`
+      localStorage.setItem("buttons", buttonCount)
+      this.addNumbersButton()
+      this.removeSearchSkip(cmg)
+    }
+  }
+
+  clickOnNextGuess(button) {
+    let btn = button.toString();
+    document.querySelector(`[data-button="${btn}"]`).click()
+  }
+
+  removeSearchSkip(cmg){
+    if(cmg.length === 5){
+      this.searchfieldTarget && this.searchfieldTarget.remove();
+      this.skipbuttonTarget && this.removeSkipButton()
+      this.addMovieName()
     }
   }
 
@@ -146,7 +177,6 @@ export default class extends Controller {
       movieMatch ?
         (this.squaresTarget.innerHTML += `<span class="square green"></span>`) :
         (this.squaresTarget.innerHTML += `<span class="square red"></span>`)
-      
     });
   }
 
@@ -172,17 +202,17 @@ export default class extends Controller {
                                 </a>`
   }
 
-  addSkipped(buttons){
+  addSkipped(){
     let skippedHtml = `<div class="wm-guess" style="border: 1px solid red; border-left-width: 5px;">
         <span class="text-danger fas fa-x"></span>
         <span class="text-danger skipped-text">Skipped</span>
       </div>`
-      
-    if(buttons) {
-      for(let i = 0; i < buttons; i++){
-        this.movieguessTarget.innerHTML += skippedHtml
-      }
-    } 
+      this.movieguessTarget.innerHTML += skippedHtml
+    // if(buttons) {
+    //   for(let i = 0; i < buttons; i++){
+    //     this.movieguessTarget.innerHTML += skippedHtml
+    //   }
+    // } 
     // else {
     //   this.movieguessTarget.innerHTML += skippedHtml
     // }
@@ -199,6 +229,10 @@ export default class extends Controller {
     movieGuess.forEach(e => {
       this.movieNameSkipbutton(e)
     });
+  }
+
+  addMovieName(){
+    this.movienameTarget.innerHTML = `<p>The answer was <span class="lawngreen">${this.movieName}</span></p>`
   }
 
   movieNameSkipbutton(e){
@@ -231,7 +265,7 @@ export default class extends Controller {
   }
 
   removeSkipButton() {
-    this.skipbuttonTarget.remove()
+    this.skipbuttonTarget && this.skipbuttonTarget.remove()
   }
 
   countDownTimer(nextmovie){
