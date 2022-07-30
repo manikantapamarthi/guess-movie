@@ -1,4 +1,5 @@
 class Admin::MoviesController < ApplicationController
+
   
   def new
     @movie = Movie.new
@@ -8,8 +9,14 @@ class Admin::MoviesController < ApplicationController
     @movies = Movie.all
   end
 
+  def show
+    @movie = Movie.find(params[:id])
+  end
+
   def create
     @movie = Movie.new(movie_params)
+    @movie.day = Date.today - Movie::START_DATE
+    @movie.movie_uniq_id = Time.now.to_formatted_s(:number)
     if @movie.save
       redirect_to admin_movies_path
     else
@@ -17,8 +24,14 @@ class Admin::MoviesController < ApplicationController
     end
   end
 
+  def publish
+    @movie = Movie.find(params[:id])
+    @movie.update(publish: true)
+    redirect_to admin_movie_path(params[:id]) 
+  end
+
   private
   def movie_params
-    params.require(:movie).permit(:hardest, :harder, :hard, :easy, :easiest, :title)
+    params.require(:movie).permit(:hardest, :harder, :hard, :easy, :easiest, :title, :contributor)
   end
 end

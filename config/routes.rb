@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     get 'search_movie', on: :collection
   end
   namespace :admin do 
-    resources :movies
+    resources :movies do
+      post 'publish', on: :member
+    end
   end
 end

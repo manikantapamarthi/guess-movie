@@ -1,5 +1,17 @@
-<% @movies.each do |m| %>
-  <div class="image-frame">
-    <%= image_tag m.hardest %>
-  </div>
-<% end %>
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>Title</th>
+        <th>Day</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @movies.each do |m| %>
+        <tr>
+          <td><%= m.title %></td>
+          <td><%= m.day %></td>
+          <td><%= link_to "show", admin_movie_path(m) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>

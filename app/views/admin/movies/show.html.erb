@@ -1,0 +1,32 @@
+<% cloud_name = ENV["cloud_name"] %>
+<div class="container">
+  <div class="movie-show">
+    <div>
+      <h5>Hardest</h5>
+      <%= cl_image_tag(@movie.hardest.key, size: "250x250", cloud_name: cloud_name) %>
+    </div>
+    <div>
+      <h5>Harder</h5>
+      <%= cl_image_tag(@movie.harder.key, size: "250x250", cloud_name: cloud_name) %>
+    </div>
+    <div>
+      <h5>Hard</h5>
+      <%= cl_image_tag(@movie.hard.key, size: "250x250", cloud_name: cloud_name) %>
+    </div>
+    <div>
+      <h5>Easy</h5>
+      <%= cl_image_tag(@movie.easy.key, size: "250x250", cloud_name: cloud_name) %>
+    </div>
+    <div>
+      <h5>Easiest</h5>
+      <%= cl_image_tag(@movie.easiest.key, size: "250x250", cloud_name: cloud_name) %>
+    </div>
+  </div>
+  <% if @movie.publish %>
+    <p>This movie already Published</p>
+  <% else %>
+    <div class="text-center mt-10">
+      <%= button_to "publish", publish_admin_movie_path(@movie), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
