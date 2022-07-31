@@ -2,7 +2,8 @@ class MoviesController < ApplicationController
   include MoviesNamesHelper
 
   def index
-    @movie = Movie.last
+    day = Date.today - Movie::START_DATE
+    @movie = Movie.where(publish: true, day: day).last
     @image = @movie&.hardest
   end
 

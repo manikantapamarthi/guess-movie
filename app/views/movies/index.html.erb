@@ -10,32 +10,27 @@
       <i class="fas fa-circle-info"></i> 
     </button>
   </div>
- 
-  <div class="image-frame" data-movieid="<%= @movie&.id %>" data-main-target="movie">
-    <%= render partial: "movies/image", locals: {image: @image, movie: @movie} %>
-  </div>
+  <% if @movie %>
+    <div class="image-frame" data-movieid="<%= @movie&.id %>" data-main-target="movie">
+      <%= render partial: "movies/image", locals: {image: @image, movie: @movie} %>
+    </div>
   
-  <div data-movie="<%= @movie.title %>" data-main-target="title"></div>
+    <div data-movie="<%= @movie.title %>" data-main-target="title" data-day="<%= @movie.day %>"></div>
 
-  <div class="hit-buttons mb-10 mt-10" data-main-target="skip">
-  </div>
+    <div class="hit-buttons mb-10 mt-10" data-main-target="skip"></div>
 
-  <%= render 'movie_search' %>
-  <div data-main-target="moviename">
-  </div>
-  <div data-main-target="squares" class="squares">
-  </div>
- 
-  <div class="movie-guess" data-main-target="movieguess" data-mguess="">
-  </div>
-
-  <div class="next-movie" data-main-target="nextmovie">
-  </div>
+    <%= render 'movie_search' %>
+    <div data-main-target="moviename"></div>
+    <div data-main-target="squares" class="squares"></div>
   
-  <div class="social-icons">
+    <div class="movie-guess" data-main-target="movieguess" data-mguess=""></div>
+
+    <div class="next-movie" data-main-target="nextmovie"></div>
     
-  </div>
-
+    <div class="social-icons"></div>
+  <% else %>
+    <p>Sorry no movie frames</p>
+  <% end %>
 </div>
 
 

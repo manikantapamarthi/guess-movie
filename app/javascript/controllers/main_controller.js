@@ -17,6 +17,9 @@ export default class extends Controller {
     document.addEventListener("autocomplete.change", this.autocomplete.bind(this))
     // setting movie name on page load, afterthat removed from dom
     this.movieName = this.titleTarget.dataset.movie
+    this.day = this.titleTarget.dataset.day
+    this.resetLocalStorage(this.day)
+    localStorage.setItem("day", this.day)
     this.titleTarget.remove()
     // getting movieid
     this.movie = this.movieTarget.dataset.movieid
@@ -291,6 +294,15 @@ export default class extends Controller {
       };
        nextmovie.innerHTML = `<span>Next Movie in</span> <span>${hours}hrs : ${min}mins : ${sec}secs</span>` 
     }, 1000)
+  }
+
+  resetLocalStorage(day){
+    let localDate = localStorage.getItem("day")
+    if (localDate !== day) {
+      localStorage.setItem("gameStatus", "running")
+      localStorage.setItem("currentMovieGuess", "")
+      localStorage.setItem("buttons", 1)
+    }
   }
 
   socialIconsLinks(){
