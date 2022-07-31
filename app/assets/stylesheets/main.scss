@@ -141,3 +141,10 @@ body {
 .movie-show{
   display: flex;
 }
+
+@media screen and (min-width: 300px) {
+  .search-movie input {
+    width: 250px;
+  
+  }
+}
