@@ -304,6 +304,11 @@ export default class extends Controller {
       localStorage.setItem("buttons", 1)
     }
   }
+  tshare(){
+    let url = encodeURI(window.location)
+    let text = encodeURIComponent(`\\Cheppuko Day ${this.day}: ${this.count}/5`)
+    window.open("https://twitter.com/intent/tweet?text="+url+text)
+  }
 
   socialIconsLinks(){
     let url = window.location

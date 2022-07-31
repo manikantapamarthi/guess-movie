@@ -27,11 +27,20 @@
 
     <div class="next-movie" data-main-target="nextmovie"></div>
     
-    <div class="social-icons"></div>
+    <div class="social-icons">
+      <a class="twitter-share-button"
+        href="https://twitter.com/intent/tweet?text=Hello%20world">
+        Tweet
+      </a>
+    </div>
   <% else %>
     <p>Sorry no movie frames</p>
+    <div class="social-icons">
+     <%= image_tag "twitter.png", data: {action: "click->main#tshare"}%>
+    </div>
   <% end %>
 </div>
+
 
 
 
