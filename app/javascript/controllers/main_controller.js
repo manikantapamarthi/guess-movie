@@ -1,5 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
-import { composeSquares } from "./share_controller";
+
+export const greenSquare = "🟩";
+
+export const redSquare = "🟥";
+
+export const graySquare = "⬛";
+
+export const blueSquare = "🟦";
+
 export const SITE_URL = "cheppuko.herokuapp.com"
 export default class extends Controller {
   static targets = ["skip", 
@@ -310,9 +318,24 @@ export default class extends Controller {
     let url = encodeURI(window.location)
     let text = encodeURIComponent(`\nCheppuko Day ${this.day}: ${this.count}/5 \n`)
     let movieGuess = localStorage.getItem("currentMovieGuess")
-    let gameStatus = localStorage.getItem("gameStatus")
-    let squares = composeSquares(movieGuess, this.day, this.count, this.movieName, gameStatus);
+    let squares = this.composeSquares(movieGuess, this.movieName);
     let tag = encodeURIComponent(`\n #cheppuko`)
     window.open("https://twitter.com/intent/tweet?text="+url+text+squares+tag)
   }
-}
+  
+  composeSquares(movieguess, moviename) {
+    const buttons = 5
+    let guess = movieguess.split(",").filter(item => item)
+    let squares = "";
+    for (let i = 0; i < buttons; i++) {
+      if (guess[i] === moviename) {
+        squares += greenSquare
+      } else if ( guess[i] === undefined) {
+        squares += graySquare
+      } else {
+        squares += redSquare
+      }
+    }
+    return squares
+  }
+} 
