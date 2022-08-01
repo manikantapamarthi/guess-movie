@@ -19,19 +19,19 @@ body {
 }
 
 .search-movie input {
-  width: 350px;
-  height: 30px;
+  width: 100%;
+  height: 35px;
   border-radius: 5px;
   padding-left: 15px;
 }
 
 .search-field {
   display: flex;
-  gap: 10px;
+  gap: 60px;
 }
 
 .search-movie {
-  min-width: 200px;
+  width: 200px;
 }
 
 .btn {
@@ -149,6 +149,5 @@ body {
 @media screen and (min-width: 300px) {
   .search-movie input {
     width: 250px;
-  
   }
 }

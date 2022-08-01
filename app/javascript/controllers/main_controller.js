@@ -306,7 +306,7 @@ export default class extends Controller {
   }
   tshare(){
     let url = encodeURI(window.location)
-    let text = encodeURIComponent(`\\Cheppuko Day ${this.day}: ${this.count}/5`)
+    let text = encodeURIComponent(`\nCheppuko Day ${this.day}: ${this.count}/5`)
     window.open("https://twitter.com/intent/tweet?text="+url+text)
   }
 
