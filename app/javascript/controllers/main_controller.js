@@ -1,4 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
+import { composeSquares } from "./share_controller";
+export const SITE_URL = "cheppuko.herokuapp.com"
 export default class extends Controller {
   static targets = ["skip", 
                     "buttoncount", 
@@ -306,14 +308,11 @@ export default class extends Controller {
   }
   tshare(){
     let url = encodeURI(window.location)
-    let text = encodeURIComponent(`\nCheppuko Day ${this.day}: ${this.count}/5`)
-    window.open("https://twitter.com/intent/tweet?text="+url+text)
-  }
-
-  socialIconsLinks(){
-    let url = window.location
-    `<a class="twitter-share-button"
-    href="https://twitter.com/intent/tweet?text=${url}">
-    Tweet</a>`
+    let text = encodeURIComponent(`\nCheppuko Day ${this.day}: ${this.count}/5 \n`)
+    let movieGuess = localStorage.getItem("currentMovieGuess")
+    let gameStatus = localStorage.getItem("gameStatus")
+    let squares = composeSquares(movieGuess, this.day, this.count, this.movieName, gameStatus);
+    let tag = encodeURIComponent(`\n #cheppuko`)
+    window.open("https://twitter.com/intent/tweet?text="+url+text+squares+tag)
   }
 }
