@@ -8,6 +8,11 @@ export const graySquare = "⬛";
 
 export const blueSquare = "🟦";
 
+export const stats = {
+  gamesPlayed: 0,
+  gamesWon: 0
+}
+
 export const SITE_URL = "cheppuko.herokuapp.com"
 export default class extends Controller {
   static targets = ["skip", 
@@ -19,12 +24,20 @@ export default class extends Controller {
                     "nextmovie",
                     "squares",
                     "searchfield",
-                    "moviename"]
+                    "moviename",
+                    "socialIcons"]
 
 
   connect(){
     console.log(`Made with ♥ RubyOnRails`)
     document.addEventListener("autocomplete.change", this.autocomplete.bind(this))
+
+    let stats = localStorage.hasOwnProperty("stats")
+    if (!stats) {
+      localStorage.setItem("stats", JSON.stringify(stats));
+    }
+
+    this.getWinParcent()
     // setting movie name on page load, afterthat removed from dom
     this.movieName = this.titleTarget.dataset.movie
     this.day = this.titleTarget.dataset.day
@@ -79,6 +92,7 @@ export default class extends Controller {
 
     if(["failed", "completed"].includes(gameStatus)){
       this.countDownTimer(this.nextmovieTarget)
+      this.addSocialIcons()
     }
 
     if(movieGuess){
@@ -118,7 +132,9 @@ export default class extends Controller {
       this.skipbuttonTarget && this.removeSkipButton()
       this.searchfieldTarget && this.searchfieldTarget.remove();
       localStorage.setItem("gameStatus", "failed")
+      this.updateGamesPlayed()
       this.addMovieName()
+      this.addSocialIcons()
     } else {
       this.squaresTarget.innerHTML += `<span class="square red"></span>`
       this.addSkipbutton()
@@ -155,13 +171,15 @@ export default class extends Controller {
     if(movieMatch){
       this.movieguessTarget.innerHTML += movieMatchHtml
       localStorage.setItem("gameStatus", "completed")
-      this.skipbuttonTarget && this.removeSkipButton()
+      this.skipbuttonTarget && this.removeSkipButton();
       this.searchfieldTarget.remove();
       localStorage.setItem("buttons", 5)
-      this.addNumbersButton()
+      this.addNumbersButton();
       this.squaresTarget.innerHTML += `<span class="square green"></span>`
       this.movienameTarget.innerHTML = `<p>You got it - The answer was <span class="lawngreen">${this.movieName}</span></p>`
-      this.countDownTimer(this.nextmovieTarget)
+      this.countDownTimer(this.nextmovieTarget);
+      this.addSocialIcons();
+      this.stats()
     } else {
       this.increment()
       this.movieguessTarget.innerHTML += movieMatchHtml
@@ -190,6 +208,7 @@ export default class extends Controller {
       this.skipbuttonTarget && this.removeSkipButton()
       this.searchfieldTarget && this.searchfieldTarget.remove();
       this.addMovieName()
+      this.addSocialIcons()
     }
   }
 
@@ -314,6 +333,11 @@ export default class extends Controller {
       localStorage.setItem("buttons", 1)
     }
   }
+
+  addSocialIcons(){
+    this.socialIconsTarget.innerHTML = `<img data-action="click->main#tshare" src="/assets/twitter.png">`
+  }
+
   tshare(){
     let url = encodeURI(window.location)
     let text = encodeURIComponent(`\nCheppuko Day ${this.day}: ${this.count}/5 \n`)
@@ -337,5 +361,27 @@ export default class extends Controller {
       }
     }
     return squares
+  }
+
+  updateGamesPlayed(){
+    stats["gamesPlayed"] += 1
+  }
+  
+  stats() {
+    stats["gamesPlayed"] += 1
+    stats["gamesWon"] += 1
+    localStorage.setItem("stats",  JSON.stringify(stats))
+    let winParcentage = (stats["gamesPlayed"] / stats["gamesWon"]) * 100
+    document.getElementById("percent").innerHTML = winParcentage
+    document.getElementById("played-stat").innerHTML = stats["gamesPlayed"]
+    document.getElementById("gamesWon").innerHTML = stats["gamesWon"]
+  }
+  getWinParcent(){
+    let stats = JSON.parse(localStorage.getItem("stats"))
+    
+    let winParcentage = (stats.gamesPlayed / stats.gamesWon) * 100
+    document.getElementById("percent").innerHTML = winParcentage
+    document.getElementById("played-stat").innerHTML = stats.gamesPlayed
+    document.getElementById("won-stat").innerHTML = stats.gamesWon
   }
 } 

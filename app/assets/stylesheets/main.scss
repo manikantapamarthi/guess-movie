@@ -38,7 +38,7 @@ body {
   width: 75px;
   height: 35px;
   color: #fff;
-  background-color: blue;
+  background-color: #0000ff;
   border: #fff;
   cursor: pointer;
 }
@@ -69,7 +69,7 @@ body {
   border-radius: 2px;
 }
 .hit-buttons a:hover {
-  border: 1px solid gray;
+  border: 1px solid #808080;
 }
 
 .info-1, .info-2{
@@ -101,10 +101,10 @@ body {
 }
 
 .border-green {
-  border: 1px solid green; border-left-width: 5px;
+  border: 1px solid #008000; border-left-width: 5px;
 }
 .border-red {
-  border: 1px solid red; border-left-width: 5px;
+  border: 1px solid #ff0000; border-left-width: 5px;
 }
 
 .modal-content {
@@ -129,11 +129,11 @@ body {
   margin: 10px;
 }
 .red{
-  background-color: red;
+  background-color: #ff0000;
 }
 
 .green{
-  background-color: springgreen;
+  background-color: #00ff7f;
 }
 .table {
   color: #fff !important;
@@ -142,7 +142,7 @@ body {
   display: flex;
 }
 .social-icons img {
-  height: 55px;
+  height: 40px;
   cursor: pointer;
 }
 

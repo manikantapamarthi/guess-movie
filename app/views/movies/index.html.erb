@@ -28,8 +28,8 @@
 
     <div class="next-movie" data-main-target="nextmovie"></div>
     
-    <div class="social-icons">
-      <%= image_tag "twitter.png", data: {action: "click->main#tshare"}%>
+    <div class="social-icons" data-main-target="socialIcons">
+      <%#= image_tag "twitter.png", data: {action: "click->main#tshare"} %>
     </div>
   <% else %>
     <p>Sorry no movie frames</p>
@@ -76,15 +76,15 @@
       <div class="modal-body">
         <div class="stats-bar">
           <div class="played row">
-            <span class="bg-warning played-stat">1</span>
+            <span class="bg-warning played-stat" id="played-stat"></span>
             <span>played</span>
           </div>                                              
           <div class="win row">
-            <span class="bg-success won-stat">0</span>
+            <span class="bg-success won-stat" id="won-stat"></span>
             <span>won</span>
           </div>
           <div class="percentage row">
-            <span>100%</span>
+            <span id="percent"></span>
             <span>win%</span>
           </div>
         </div>
