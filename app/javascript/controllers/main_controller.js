@@ -32,8 +32,9 @@ export default class extends Controller {
     console.log(`Made with ♥ RubyOnRails`)
     document.addEventListener("autocomplete.change", this.autocomplete.bind(this))
 
-    let stats = localStorage.hasOwnProperty("stats")
-    if (!stats) {
+    let checkStats = localStorage.hasOwnProperty("stats")
+    // console.log(stats);
+    if (!checkStats) {
       localStorage.setItem("stats", JSON.stringify(stats));
     }
 
@@ -129,15 +130,18 @@ export default class extends Controller {
     let mguess = localStorage.getItem("currentMovieGuess") ? localStorage.getItem("currentMovieGuess").split(",").filter(item => item) : ["skipped"]
     
     if(mguess.length === maxCount){
-      this.skipbuttonTarget && this.removeSkipButton()
+      this.skipbuttonTarget && this.removeSkipButton();
       this.searchfieldTarget && this.searchfieldTarget.remove();
-      localStorage.setItem("gameStatus", "failed")
-      this.updateGamesPlayed()
-      this.addMovieName()
-      this.addSocialIcons()
+      localStorage.setItem("gameStatus", "failed");
+      this.updateGamesPlayed();
+      this.addMovieName();
+      this.addSocialIcons();
+      this.countDownTimer(this.nextmovieTarget);
+      this.getWinParcent()
+      // this.stats()
     } else {
       this.squaresTarget.innerHTML += `<span class="square red"></span>`
-      this.addSkipbutton()
+      this.addSkipbutton();
       let button = localStorage.getItem("buttons")
       this.clickOnNextGuess(button);
     }  
@@ -167,7 +171,6 @@ export default class extends Controller {
     
     let buttonCount = parseInt(numberButtons) + 1
       
-
     if(movieMatch){
       this.movieguessTarget.innerHTML += movieMatchHtml
       localStorage.setItem("gameStatus", "completed")
@@ -365,6 +368,7 @@ export default class extends Controller {
 
   updateGamesPlayed(){
     stats["gamesPlayed"] += 1
+    localStorage.setItem("stats",  JSON.stringify(stats))
   }
   
   stats() {
@@ -374,7 +378,7 @@ export default class extends Controller {
     let winParcentage = (stats["gamesPlayed"] / stats["gamesWon"]) * 100
     document.getElementById("percent").innerHTML = winParcentage
     document.getElementById("played-stat").innerHTML = stats["gamesPlayed"]
-    document.getElementById("gamesWon").innerHTML = stats["gamesWon"]
+    document.getElementById("won-stat").innerHTML = stats["gamesWon"]
   }
   getWinParcent(){
     let stats = JSON.parse(localStorage.getItem("stats"))
