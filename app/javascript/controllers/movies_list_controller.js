@@ -1,5 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
+
 export default class extends Controller {}
+
 export const movieNames = [
   "1 - Nenokkadine",
   "100% Love",
