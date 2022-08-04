@@ -3,7 +3,6 @@
   <h1 class="title">Cheppuko</h1>
   <div class="header-icons">
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#statsModal">
-      <%#= icon('fa-thin', 'square-info')%>
       <i class="fas fa-chart-simple"></i>
     </button>
     <button type="button" class="btn btn-primary ml-10" data-bs-toggle="modal" data-bs-target="#howToPlay">
@@ -29,13 +28,9 @@
     <div class="next-movie" data-main-target="nextmovie"></div>
     
     <div class="social-icons" data-main-target="socialIcons">
-      <%#= image_tag "twitter.png", data: {action: "click->main#tshare"} %>
     </div>
   <% else %>
     <p>Sorry no movie frames</p>
-    <div class="social-icons">
-      <%#= image_tag "twitter.png", data: {action: "click->main#tshare"}%>
-    </div>
   <% end %>
 </div>
 
