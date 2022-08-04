@@ -1,12 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
-
-export const greenSquare = "🟩";
-
-export const redSquare = "🟥";
-
-export const graySquare = "⬛";
-
-export const blueSquare = "🟦";
+import { movieNames } from "./movies_list_controller"
+import { composeSquares,countDownTimer } from "./share_controller"
 
 export const stats = {
   gamesPlayed: 0,
@@ -33,20 +27,22 @@ export default class extends Controller {
     document.addEventListener("autocomplete.change", this.autocomplete.bind(this))
 
     let checkStats = localStorage.hasOwnProperty("stats")
-    // console.log(stats);
+    
     if (!checkStats) {
       localStorage.setItem("stats", JSON.stringify(stats));
     }
 
     this.getWinParcent()
     // setting movie name on page load, afterthat removed from dom
-    this.movieName = this.titleTarget.dataset.movie
-    this.day = this.titleTarget.dataset.day
+    if (this.titleTarget) {
+      this.movieName = this.titleTarget.dataset.movie
+      this.day = this.titleTarget.dataset.day
+    }
     this.resetLocalStorage(this.day)
     localStorage.setItem("day", this.day)
     this.titleTarget.remove()
     // getting movieid
-    this.movie = this.movieTarget.dataset.movieid
+    this.movie = this.movieTarget && this.movieTarget.dataset.movieid
 
     this.getGameStatus();
 
@@ -92,7 +88,7 @@ export default class extends Controller {
     }
 
     if(["failed", "completed"].includes(gameStatus)){
-      this.countDownTimer(this.nextmovieTarget)
+      countDownTimer(this.nextmovieTarget)
       this.addSocialIcons()
     }
 
@@ -100,8 +96,9 @@ export default class extends Controller {
       this.addMovieNameButton(movieGuess);
       this.addRedGreenSqures(movieGuess)
     }
+    this.newautocomplete()
   }
-
+  
   getGameStatus(){
     let gameStatus = localStorage.getItem("gameStatus")
     if(["completed", "failed"].includes(gameStatus)) {
@@ -136,7 +133,7 @@ export default class extends Controller {
       this.updateGamesPlayed();
       this.addMovieName();
       this.addSocialIcons();
-      this.countDownTimer(this.nextmovieTarget);
+      countDownTimer(this.nextmovieTarget);
       this.getWinParcent()
       // this.stats()
     } else {
@@ -147,19 +144,42 @@ export default class extends Controller {
     }  
   }
   // search field autocomplete event
+  newautocomplete(){
+    const autoCompleteJS = new autoComplete({
+      selector: "#autoComplete",
+      placeHolder: "Search for Movie",
+      data: {
+        src: movieNames,
+        cache: true
+      },
+      resultItem: {
+        highlight: true
+      },
+      events: {
+        input: {
+          selection: (event) => {
+            const selection = event.detail.selection.value;
+            autoCompleteJS.input.value = selection;
+            this.autocomplete(event);
+          }
+        }
+      }
+    })
+  }
+
   autocomplete(e) {
-    let movieMatch = e.detail.value.toLowerCase() === this.movieName.toLowerCase()
+    let movieMatch = e.detail.selection.value.toLowerCase() === this.movieName.toLowerCase()
 
     let color = movieMatch ? "success" : "danger"
     let icon = movieMatch ? "check" : "x"
 
     let movieMatchHtml = `<div class='wm-guess ${movieMatch ? "border-green" : "border-red"}'>
       <span class="text-${color} fas fa-${icon}"></span>
-      <span class="text-${color} skipped-text">${e.detail.value ? e.detail.value : this.movieName }</span>
+      <span class="text-${color} skipped-text">${e.detail.selection.value ? e.detail.selection.value : this.movieName }</span>
     </div>`
 
-    this.movieguessTarget.dataset.mguess += `${e.detail.value},`
-    let currentMovieGuess = localStorage.getItem("currentMovieGuess") ? (localStorage.getItem("currentMovieGuess") + `${e.detail.value},`) : `${e.detail.value},`
+    this.movieguessTarget.dataset.mguess += `${e.detail.selection.value},`
+    let currentMovieGuess = localStorage.getItem("currentMovieGuess") ? (localStorage.getItem("currentMovieGuess") + `${e.detail.selection.value},`) : `${e.detail.selection.value},`
 
     let cmg = currentMovieGuess.split(",").filter(item => item)
     
@@ -180,7 +200,7 @@ export default class extends Controller {
       this.addNumbersButton();
       this.squaresTarget.innerHTML += `<span class="square green"></span>`
       this.movienameTarget.innerHTML = `<p>You got it - The answer was <span class="lawngreen">${this.movieName}</span></p>`
-      this.countDownTimer(this.nextmovieTarget);
+      countDownTimer(this.nextmovieTarget);
       this.addSocialIcons();
       this.stats()
     } else {
@@ -312,22 +332,6 @@ export default class extends Controller {
     this.skipbuttonTarget && this.skipbuttonTarget.remove()
   }
 
-  countDownTimer(nextmovie){
-    setInterval(function() {
-      var day = new Date()
-      var hours = 24 - day.getHours();
-      var min = 60 - day.getMinutes();
-      if((min + '').length == 1){
-        min = '0' + min;
-      }
-      var sec = 60 - day.getSeconds();
-      if((sec + '').length == 1){
-            sec = '0' + sec;
-      };
-       nextmovie.innerHTML = `<span>Next Movie in</span> <span>${hours}hrs : ${min}mins : ${sec}secs</span>` 
-    }, 1000)
-  }
-
   resetLocalStorage(day){
     let localDate = localStorage.getItem("day")
     if (localDate !== day) {
@@ -345,27 +349,11 @@ export default class extends Controller {
     let url = encodeURI(window.location)
     let text = encodeURIComponent(`\nCheppuko Day ${this.day}: ${this.count}/5 \n`)
     let movieGuess = localStorage.getItem("currentMovieGuess")
-    let squares = this.composeSquares(movieGuess, this.movieName);
+    let squares = composeSquares(movieGuess, this.movieName);
     let tag = encodeURIComponent(`\n #cheppuko`)
     window.open("https://twitter.com/intent/tweet?text="+url+text+squares+tag)
   }
-  
-  composeSquares(movieguess, moviename) {
-    const buttons = 5
-    let guess = movieguess.split(",").filter(item => item)
-    let squares = "";
-    for (let i = 0; i < buttons; i++) {
-      if (guess[i] === moviename) {
-        squares += greenSquare
-      } else if ( guess[i] === undefined) {
-        squares += graySquare
-      } else {
-        squares += redSquare
-      }
-    }
-    return squares
-  }
-
+ 
   updateGamesPlayed(){
     stats["gamesPlayed"] += 1
     localStorage.setItem("stats",  JSON.stringify(stats))
@@ -388,4 +376,5 @@ export default class extends Controller {
     document.getElementById("played-stat").innerHTML = stats.gamesPlayed
     document.getElementById("won-stat").innerHTML = stats.gamesWon
   }
-} 
+
+}
