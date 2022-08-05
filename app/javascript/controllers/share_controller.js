@@ -8,8 +8,7 @@ export const graySquare = "⬛";
 
 export const blueSquare = "🟦";
 
-export default class extends Controller {
-}
+export default class extends Controller {}
 
 export const composeSquares = (movieguess, moviename) => {
   const buttons = 5
