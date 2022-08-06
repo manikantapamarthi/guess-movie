@@ -273,14 +273,6 @@ export default class extends Controller {
         <span class="text-danger skipped-text">Skipped</span>
       </div>`
       this.movieguessTarget.innerHTML += skippedHtml
-    // if(buttons) {
-    //   for(let i = 0; i < buttons; i++){
-    //     this.movieguessTarget.innerHTML += skippedHtml
-    //   }
-    // } 
-    // else {
-    //   this.movieguessTarget.innerHTML += skippedHtml
-    // }
   }
 
   addSkipbutton(){
