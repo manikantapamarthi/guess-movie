@@ -34,10 +34,10 @@ export default class extends Controller {
 
     this.getWinParcent()
     // setting movie name on page load, afterthat removed from dom
-    if (this.titleTarget) {
-      this.movieName = this.titleTarget.dataset.movie
-      this.day = this.titleTarget.dataset.day
-    }
+    
+    this.movieName = this.titleTarget && this.titleTarget.dataset.movie
+    this.day = this.titleTarget && this.titleTarget.dataset.day
+    
     this.resetLocalStorage(this.day)
     localStorage.setItem("day", this.day)
     this.titleTarget.remove()

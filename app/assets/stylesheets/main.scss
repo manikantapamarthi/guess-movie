@@ -147,6 +147,25 @@ body {
   cursor: pointer;
 }
 
+#twitter-dm {
+  position: fixed;
+  bottom: 0;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.0;
+  }
+}
+.blink {
+  animation: blink 1s step-start 0s infinite;
+}
+
+#twitter-dm a {
+  text-decoration: none;
+  color: #ff0000;
+}
+
 @media screen and (min-width: 300px) {
   .search-movie input {
     width: 250px;

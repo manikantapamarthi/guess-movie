@@ -1392,5 +1392,7 @@ export const movieNames = [
   "Yuvakudu",
   "Yuvaraju",
   "Zanjeer",
-  "iSmart Shankar"
+  "iSmart Shankar",
+  "Colour Photo",
+  "Drona"
 ];

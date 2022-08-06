@@ -1,15 +1,16 @@
 <div class=container data-controller="main">
   
   <h1 class="title">Cheppuko</h1>
-  <div class="header-icons">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#statsModal">
-      <i class="fas fa-chart-simple"></i>
-    </button>
-    <button type="button" class="btn btn-primary ml-10" data-bs-toggle="modal" data-bs-target="#howToPlay">
-      <i class="fas fa-circle-info"></i> 
-    </button>
-  </div>
   <% if @movie %>
+    <div class="header-icons">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#statsModal">
+        <i class="fas fa-chart-simple"></i>
+      </button>
+      <button type="button" class="btn btn-primary ml-10" data-bs-toggle="modal" data-bs-target="#howToPlay">
+        <i class="fas fa-circle-info"></i> 
+      </button>
+    </div>
+  
     <div class="image-frame" data-movieid="<%= @movie&.id %>" data-main-target="movie">
       <%= render partial: "movies/image", locals: {image: @image, movie: @movie} %>
     </div>
@@ -32,6 +33,15 @@
   <% else %>
     <p>Sorry no movie frames</p>
   <% end %>
+</div>
+
+<div id="twitter-dm" class="text-center">
+  <p><span class="blink">You can contribute your screenshots via DM</span>
+    <a href="https://twitter.com/messages/compose?recipient_id=181975250"
+      class="twitter-dm-button" data-screen-name="@_manikantap">
+      @_manikantap
+    </a>
+  </p>
 </div>
 
 
