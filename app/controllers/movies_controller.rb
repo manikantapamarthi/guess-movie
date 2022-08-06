@@ -3,13 +3,13 @@ class MoviesController < ApplicationController
 
   def index
     day = Date.today - Movie::START_DATE
-    @movie = Movie.where(publish: true, day: day).last
+    @movie = Movie.where(publish: true, day: 9).last
     @image = @movie&.hardest
   end
 
   def get_frame
     day = Date.today - Movie::START_DATE
-    movie = Movie.where(publish: true, day: day).last
+    movie = Movie.where(publish: true, day: 9).last
 
     image = {"1" => movie.hardest, 
               "2" => movie.harder, 
