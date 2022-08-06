@@ -142,9 +142,12 @@ body {
 .movie-show{
   display: flex;
 }
+
+
 .social-icons img {
   height: 40px;
   cursor: pointer;
+  align-items: center;
 }
 
 #twitter-dm {

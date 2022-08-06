@@ -15,7 +15,7 @@
       <%= render partial: "movies/image", locals: {image: @image, movie: @movie} %>
     </div>
   
-    <div data-movie="<%= @movie.title %>" data-main-target="title" data-day="<%= @movie.day %>"></div>
+    <div data-movie="<%= @movie.title %>" data-main-target="title" data-day="<%= @movie.day %>" data-contributor="<%= @movie.contributor %>"></div>
 
     <div class="hit-buttons mb-10 mt-10" data-main-target="skip"></div>
 

@@ -37,6 +37,7 @@ export default class extends Controller {
     
     this.movieName = this.titleTarget && this.titleTarget.dataset.movie
     this.day = this.titleTarget && this.titleTarget.dataset.day
+    this.contributor =  this.titleTarget && this.titleTarget.dataset.contributor
     
     this.resetLocalStorage(this.day)
     localStorage.setItem("day", this.day)
@@ -342,7 +343,7 @@ export default class extends Controller {
   }
 
   addSocialIcons(){
-    this.socialIconsTarget.innerHTML = `<img data-action="click->main#tshare" src="/assets/twitter.png">`
+    this.socialIconsTarget.innerHTML = `<p>Contributor: <a href="https://twitter.com/${this.contributor}">${this.contributor}</a></p><img data-action="click->main#tshare" src="/assets/twitter.png">`
   }
 
   tshare(){
