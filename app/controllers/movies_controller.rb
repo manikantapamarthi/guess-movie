@@ -8,7 +8,8 @@ class MoviesController < ApplicationController
   end
 
   def get_frame
-    movie = Movie.last
+    day = Date.today - Movie::START_DATE
+    movie = Movie.where(publish: true, day: day).last
 
     image = {"1" => movie.hardest, 
               "2" => movie.harder, 

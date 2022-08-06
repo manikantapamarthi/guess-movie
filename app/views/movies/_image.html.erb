@@ -1,7 +1,7 @@
 <% cloud_name = ENV["cloud_name"] %>
 <%= turbo_frame_tag movie do %>
   <% if Rails.env == "development" %>
-    <%= image_tag image, size: "450x250" %>
+    <%= image_tag image, size: "450x250", cloud_name: cloud_name %>
   <% else %>
     <%= cl_image_tag(image.key, size: "450x250", cloud_name: cloud_name) %>
   <% end %>
