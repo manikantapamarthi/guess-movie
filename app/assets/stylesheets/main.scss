@@ -149,11 +149,6 @@ body {
   align-items: center;
 }
 
-#twitter-dm {
-  position: fixed;
-  bottom: 0;
-}
-
 @keyframes blink {
   50% {
     opacity: 0.0;
@@ -172,4 +167,5 @@ body {
   .search-movie input {
     width: 250px;
   }
+
 }
