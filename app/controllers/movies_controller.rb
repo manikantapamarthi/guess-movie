@@ -2,14 +2,14 @@ class MoviesController < ApplicationController
   include MoviesNamesHelper
 
   def index
-    day = Date.today - Movie::START_DATE
-    @movie = Movie.where(publish: true, day: 9).last
+    day = (Date.today - Movie::START_DATE).to_i
+    @movie = Movie.where(publish: true, day: day).last
     @image = @movie&.hardest
   end
 
   def get_frame
-    day = Date.today - Movie::START_DATE
-    movie = Movie.where(publish: true, day: 9).last
+    day = (Date.today - Movie::START_DATE).to_i
+    movie = Movie.where(publish: true, day: day).last
 
     image = {"1" => movie.hardest, 
               "2" => movie.harder, 
