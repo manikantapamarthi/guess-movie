@@ -122,7 +122,6 @@ export const movieNames = [
   "Anji",
   "Ankuram",
   "Anna Thamudu",
-  "Annai Oru Aalayam",
   "Annamayya",
   "Annavaram",
   "Annayya",

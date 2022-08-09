@@ -337,7 +337,7 @@ export default class extends Controller {
   addSocialIcons(){
     this.socialIconsTarget.innerHTML = `<p>Contributor: <a href="https://twitter.com/${this.contributor}">${this.contributor}</a></p><img data-action="click->main#tshare" src="/assets/twitter.png">`
   }
-
+//<img data-action="click->main#tshare" src="/assets/wa.png">
   tshare(){
     let url = encodeURI(window.location)
     let text = encodeURIComponent(`\nCheppuko Day ${this.day}: ${this.count}/5 \n`)

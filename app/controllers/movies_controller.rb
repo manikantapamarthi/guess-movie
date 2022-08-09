@@ -1,21 +1,17 @@
 class MoviesController < ApplicationController
   include MoviesNamesHelper
+  before_action :get_day, only: [:index,:get_frame]
 
   def index
-    day = (Date.today - Movie::START_DATE).to_i
-    @movie = Movie.where(publish: true, day: day).last
     @image = @movie&.hardest
   end
 
   def get_frame
-    day = (Date.today - Movie::START_DATE).to_i
-    movie = Movie.where(publish: true, day: day).last
-
-    image = {"1" => movie.hardest, 
-              "2" => movie.harder, 
-              "3" => movie.hard, 
-              "4" => movie.easy, 
-              "5" => movie.easiest}
+    image = {"1" => @movie.hardest, 
+              "2" => @movie.harder, 
+              "3" => @movie.hard, 
+              "4" => @movie.easy, 
+              "5" => @movie.easiest}
               
     @image = image[params["b"]]
       
@@ -27,8 +23,15 @@ class MoviesController < ApplicationController
     end
   end
 
-  def search_movie
-    @movie_names = movie_names.select{|m| m.downcase.include? "#{params["q"]}".downcase}
-    render layout: false
+  # def search_movie
+  #   @movie_names = movie_names.select{|m| m.downcase.include? "#{params["q"]}".downcase}
+  #   render layout: false
+  # end
+
+  private
+
+  def get_day
+    day = (Date.today - Movie::START_DATE).to_i
+    @movie = Movie.where(publish: true, day: day).last
   end
 end
