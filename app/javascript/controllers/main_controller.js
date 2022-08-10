@@ -335,16 +335,24 @@ export default class extends Controller {
   }
 
   addSocialIcons(){
-    this.socialIconsTarget.innerHTML = `<p>Contributor: <a href="https://twitter.com/${this.contributor}">${this.contributor}</a></p><img data-action="click->main#tshare" src="/assets/twitter.png">`
+    this.socialIconsTarget.innerHTML = `<p>Contributor: <a href="https://twitter.com/${this.contributor}">${this.contributor}</a></p><img data-action="click->main#tshare" src="/assets/twitter.png"> <img data-action="click->main#washare" src="/assets/wa.png">`
   }
 //<img data-action="click->main#tshare" src="/assets/wa.png">
   tshare(){
+    window.open("https://twitter.com/intent/tweet?text="+this.shareText())
+  }
+
+  washare(){
+    window.open("https://wa.me?text="+this.shareText())
+  }
+
+  shareText() {
     let url = encodeURI(window.location)
     let text = encodeURIComponent(`\nCheppuko Day ${this.day}: ${this.count}/5 \n`)
     let movieGuess = localStorage.getItem("currentMovieGuess")
     let squares = composeSquares(movieGuess, this.movieName);
     let tag = encodeURIComponent(`\n #cheppuko`)
-    window.open("https://twitter.com/intent/tweet?text="+url+text+squares+tag)
+    return url+text+squares+tag
   }
  
   updateGamesPlayed(){
