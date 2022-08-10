@@ -15,7 +15,12 @@ class Admin::MoviesController < ApplicationController
 
   def create
     @movie = Movie.new(movie_params)
-    @movie.day = Date.today - Movie::START_DATE
+    mve = Movie.last.day
+    if mve.present?
+      @movie.day = mve + 1
+    else
+      @movie.day = (Date.today - Movie::START_DATE).to_i
+    end
     @movie.movie_uniq_id = Time.now.to_formatted_s(:number)
     if @movie.save
       redirect_to admin_movies_path

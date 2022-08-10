@@ -434,6 +434,7 @@ export const movieNames = [
   "Golmaal",
   "Goodachari",
   "Gopala Gopala",
+  "Gorintaku",
   "Goutham Nanda",
   "Govindha Govindha",
   "Govindudu Andari Vaadele",
