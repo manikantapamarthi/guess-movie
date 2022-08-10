@@ -17,7 +17,7 @@ class MoviesController < ApplicationController
       
     respond_to do |format|
       format.turbo_stream do 
-        render turbo_stream: turbo_stream.replace(movie, partial: "movies/image", locals: {image: @image, movie: movie})
+        render turbo_stream: turbo_stream.replace(@movie, partial: "movies/image", locals: {image: @image, movie: @movie})
       end
       format.html
     end
