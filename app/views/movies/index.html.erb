@@ -1,26 +1,34 @@
-<div class=container data-controller="main">
-  
-  <h1 class="title">Cheppuko</h1>
-  <div id="twitter-dm" class="text-center">
-  <p>You can contribute your screenshots <span class="blink">via DM</span>
-    <a href="https://twitter.com/messages/compose?recipient_id=181975250"
-      class="twitter-dm-button" data-screen-name="@_manikantap">
-      @_manikantap
-    </a>
-  </p>
-  <p style="background-color: red;">Wishing you all Happy Raksha Bandhan <%= image_tag 'raksha-bandhan.png', size:"35x35" %></p>
-</div>
+<div class="container d-flex flex-column align-items-center" data-controller="main">
   <% if @movie %>
-    <div class="header-icons">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#statsModal">
-        <i class="fas fa-chart-simple"></i>
-      </button>
-      <button type="button" class="btn btn-primary ml-10" data-bs-toggle="modal" data-bs-target="#howToPlay">
-        <i class="fas fa-circle-info"></i> 
-      </button>
+    <div class="main-header d-flex  justify-content-between">
+      <div>
+        <h1 class="title title-header">Cheppuko</h1>
+      </div>
+        
+      <div class="header-icons d-flex align-items-center">
+        <%= link_to "#", "data-bs-toggle": "modal", "data-bs-target": "#archiveModal", class: "mr-4" do %>
+          <i class="fas fa-calendar-days"></i>
+        <% end %>
+        <%= link_to "#", "data-bs-toggle": "modal", "data-bs-target": "#statsModal", class: "mr-4" do %>
+          <i class="fas fa-chart-simple"></i>
+        <% end %>
+        <%= link_to "#", "data-bs-toggle": "modal", "data-bs-target": "#howToPlay" do %>
+          <i class="fas fa-circle-info"></i>
+        <% end %>
+      </div>
     </div>
   
-    <div class="image-frame" data-movieid="<%= @movie&.id %>" data-main-target="movie">
+    <div id="twitter-dm" class="text-center">
+      <p>You can contribute your movie screenshots <span class="blink">via DM</span>
+        <a href="https://twitter.com/messages/compose?recipient_id=181975250"
+          class="twitter-dm-button" data-screen-name="@_manikantap">
+          @_manikantap
+        </a>
+      </p>
+      <p style="background-color: red;">Wishing you all Happy Raksha Bandhan <%= image_tag 'raksha-bandhan.png', size:"35x35" %></p>
+    </div>
+  
+    <div class="image-frame mb-10" data-movieid="<%= @movie&.id %>" data-main-target="movie">
       <%= render partial: "movies/image", locals: {image: @image, movie: @movie} %>
     </div>
   
@@ -92,6 +100,20 @@
             <span>win%</span>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="archiveModal" tabindex="-1" aria-labelledby="archiveModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="statsModalLabel">Archive</h6>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>coming soon....</p>
       </div>
     </div>
   </div>
