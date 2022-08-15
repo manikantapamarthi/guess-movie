@@ -31,7 +31,7 @@ class MoviesController < ApplicationController
   private
 
   def get_day
-    day = (Date.today - Movie::START_DATE).to_i
+    day = (Time.zone.now.to_date - Movie::START_DATE).to_i
     @movie = Movie.where(publish: true, day: day).last
   end
 end
