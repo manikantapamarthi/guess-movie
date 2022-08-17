@@ -1,0 +1,16 @@
+<div class="main-header d-flex  justify-content-between">
+  <div>
+    <h1 class="title title-header">Cheppuko</h1>
+  </div>
+  <div class="header-icons d-flex align-items-center">
+    <%= link_to archive_movies_path, class: "mr-4" do %>
+      <i class="fas fa-calendar-days"></i>
+    <% end %>
+    <%= link_to "#", "data-bs-toggle": "modal", "data-bs-target": "#statsModal", class: "mr-4" do %>
+      <i class="fas fa-chart-simple"></i>
+    <% end %>
+    <%= link_to "#", "data-bs-toggle": "modal", "data-bs-target": "#howToPlay" do %>
+      <i class="fas fa-circle-info"></i>
+    <% end %>
+  </div>
+</div>
