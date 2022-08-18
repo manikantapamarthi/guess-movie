@@ -100,8 +100,10 @@ export default class extends Controller {
       this.addMovieNameButton(movieGuess);
       this.addRedGreenSqures(movieGuess)
     }
-    this.newautocomplete()
-    this.addRemoveActiveFrame(this.skipTarget.getElementsByTagName("a"))
+    this.newautocomplete();
+    this.addRemoveActiveFrame(this.skipTarget.getElementsByTagName("a"));
+    this.addActiveFrame(this.skipTarget.getElementsByTagName("a"));
+    this.clickOnNextGuess(currentIndex)
   }
 
   addRemoveActiveFrame(targets){
@@ -233,7 +235,8 @@ export default class extends Controller {
       this.clickOnNextGuess(buttonCount);
       this.removeSearchSkip(cmg);
     }
-    
+    this.addActiveFrame(this.skipTarget.getElementsByTagName("a"));
+    this.addRemoveActiveFrame(this.skipTarget.getElementsByTagName("a"))
   }
 
   assingButtonNumber(buttonCount){
