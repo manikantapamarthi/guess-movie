@@ -50,6 +50,9 @@ export default class extends Controller {
     let buttons = localStorage.getItem("buttons")
     this.count = buttons ? buttons : 1
 
+    let currentIndex = localStorage.getItem("currentIndex")
+    this.currentIndex = currentIndex ? currentIndex : localStorage.setItem("currentIndex", 1) 
+
     let movieGuess = localStorage.getItem("currentMovieGuess") ? localStorage.getItem("currentMovieGuess").split(",").filter(item => item) : ""
   
     if (buttons > 1){
@@ -97,7 +100,19 @@ export default class extends Controller {
       this.addMovieNameButton(movieGuess);
       this.addRedGreenSqures(movieGuess)
     }
-    this.newautocomplete()
+    this.newautocomplete();
+    this.addRemoveActiveFrame(this.skipTarget.getElementsByTagName("a"));
+    this.addActiveFrame(this.skipTarget.getElementsByTagName("a"));
+    this.clickOnNextGuess(currentIndex)
+  }
+
+  addRemoveActiveFrame(targets){
+    [...targets].forEach(e => {
+      e.addEventListener('click', function(){
+        [...targets].forEach(e => {e.classList.remove("active-frame")})
+        this.classList.add("active-frame");
+      })
+    })
   }
   
   getGameStatus(){
@@ -117,8 +132,10 @@ export default class extends Controller {
     const maxCount = 5
     if (this.count < maxCount){
       this.increment()
+      localStorage.setItem("currentIndex", this.count) 
       this.addButton(this.count)
     }
+    
     localStorage.setItem("buttons", this.count)
     
     let movieGuess = localStorage.getItem("currentMovieGuess") ? localStorage.getItem("currentMovieGuess") + "skipped," : "skipped,"
@@ -143,6 +160,7 @@ export default class extends Controller {
       let button = localStorage.getItem("buttons")
       this.clickOnNextGuess(button);
     }  
+    this.addRemoveActiveFrame(this.skipTarget.getElementsByTagName("a"))
   }
   // search field autocomplete event
   newautocomplete(){
@@ -188,10 +206,14 @@ export default class extends Controller {
       localStorage.setItem("currentMovieGuess", currentMovieGuess)
     }
 
+
     let numberButtons = localStorage.getItem("buttons")
     
     let buttonCount = parseInt(numberButtons) + 1
-      
+
+    let cI = buttonCount >= 5 ? 5 : buttonCount
+    localStorage.setItem("currentIndex",cI);
+
     if(movieMatch){
       this.movieguessTarget.innerHTML += movieMatchHtml
       localStorage.setItem("gameStatus", "completed")
@@ -213,6 +235,8 @@ export default class extends Controller {
       this.clickOnNextGuess(buttonCount);
       this.removeSearchSkip(cmg);
     }
+    this.addActiveFrame(this.skipTarget.getElementsByTagName("a"));
+    this.addRemoveActiveFrame(this.skipTarget.getElementsByTagName("a"))
   }
 
   assingButtonNumber(buttonCount){
@@ -246,6 +270,7 @@ export default class extends Controller {
   }
 
   addNumbersButton(){
+    this.addRemoveActiveFrame(this.skipTarget.getElementsByTagName("a"))
     let buttons = localStorage.getItem("buttons")
     this.skipTarget.innerHTML = ""
     for(let i = 0; i < buttons; i++){
@@ -265,6 +290,20 @@ export default class extends Controller {
                                   >
                                   ${count}
                                 </a>`
+    this.addActiveFrame(this.skipTarget.getElementsByTagName("a"));                            
+  }
+
+  addActiveFrame(targets) {
+    let currentIndex = localStorage.getItem("currentIndex");
+    [...targets].forEach(e => {
+      let button = e.dataset.button
+      if(button === currentIndex){
+        e.classList.add("active-frame")
+      } else {
+        e.classList.remove("active-frame")
+      }
+    })
+  
   }
 
   addSkipped(){

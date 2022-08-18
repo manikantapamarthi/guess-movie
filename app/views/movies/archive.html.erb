@@ -1,0 +1,13 @@
+<div class="container d-flex flex-column align-items-center">
+  <% if @movies.present? %>
+    <%= render 'header' %>
+    <h3 class="title title-heade mt-10">Archive</h3>
+      <div class="movies-list grid-container">
+        <% @movies.each_with_index do |m, i| %>
+          <div>
+            <%= link_to (i + 1), movie_path(m) %>
+          </div>
+        <% end %>
+      </div>
+  <% end %>
+</div>
