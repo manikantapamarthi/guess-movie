@@ -6,7 +6,7 @@ export const stats = {
   gamesPlayed: 0,
   gamesWon: 0
 }
-
+export const maxCount = 5
 export const SITE_URL = "cheppuko.herokuapp.com"
 export default class extends Controller {
   static targets = ["skip", 
@@ -75,8 +75,8 @@ export default class extends Controller {
     }
     
     let gameStatus = localStorage.getItem("gameStatus")
-
-    if(movieGuess.length === 5 && gameStatus=== "failed") {
+    
+    if(movieGuess.length >= 5 && gameStatus=== "failed") {
       this.skipbuttonTarget && this.removeSkipButton();
       this.searchfieldTarget && this.searchfieldTarget.remove();
       this.addMovieName()
@@ -129,7 +129,6 @@ export default class extends Controller {
   }
   
   skip(){
-    const maxCount = 5
     if (this.count < maxCount){
       this.increment()
       localStorage.setItem("currentIndex", this.count) 
@@ -144,7 +143,7 @@ export default class extends Controller {
     
     let mguess = localStorage.getItem("currentMovieGuess") ? localStorage.getItem("currentMovieGuess").split(",").filter(item => item) : ["skipped"]
     
-    if(mguess.length === maxCount){
+    if(mguess.length >= maxCount){
       this.skipbuttonTarget && this.removeSkipButton();
       this.searchfieldTarget && this.searchfieldTarget.remove();
       localStorage.setItem("gameStatus", "failed");
@@ -180,6 +179,7 @@ export default class extends Controller {
             const selection = event.detail.selection.value;
             autoCompleteJS.input.value = selection;
             this.autocomplete(event);
+            autoCompleteJS.input.value = '';
           }
         }
       }
@@ -226,6 +226,12 @@ export default class extends Controller {
       countDownTimer(this.nextmovieTarget);
       this.addSocialIcons();
       this.stats()
+    } else if (!movieMatch && parseInt(numberButtons) >= maxCount) {
+      this.movieguessTarget.innerHTML += movieMatchHtml
+      this.squaresTarget.innerHTML += `<span class="square red"></span>`
+      this.removeSearchSkip(cmg)
+      countDownTimer(this.nextmovieTarget);
+      // localStorage.setItem("gameStatus", "failed");
     } else {
       this.increment()
       this.movieguessTarget.innerHTML += movieMatchHtml
@@ -246,12 +252,14 @@ export default class extends Controller {
   }
 
   clickOnNextGuess(button) {
-    let btn = button.toString();
-    document.querySelector(`[data-button="${btn}"]`).click()
+    if(button) {
+      let btn = button.toString();
+      document.querySelector(`[data-button="${btn}"]`).click()
+    }
   }
 
   removeSearchSkip(cmg){
-    if(cmg.length === 5){
+    if(cmg.length >= maxCount){
       localStorage.setItem("gameStatus", "failed")
       this.skipbuttonTarget && this.removeSkipButton()
       this.searchfieldTarget && this.searchfieldTarget.remove();
