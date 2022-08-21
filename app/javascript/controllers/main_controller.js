@@ -4,7 +4,9 @@ import { composeSquares,countDownTimer } from "./share_controller"
 
 export const stats = {
   gamesPlayed: 0,
-  gamesWon: 0
+  gamesWon: 0,
+  currentStreak: 0,
+  maxStreak: 0
 }
 export const maxCount = 5
 export const SITE_URL = "cheppuko.herokuapp.com"
@@ -147,12 +149,12 @@ export default class extends Controller {
       this.skipbuttonTarget && this.removeSkipButton();
       this.searchfieldTarget && this.searchfieldTarget.remove();
       localStorage.setItem("gameStatus", "failed");
-      this.updateGamesPlayed();
+      // this.updateGamesPlayed();
       this.addMovieName();
       this.addSocialIcons();
       countDownTimer(this.nextmovieTarget);
-      this.getWinParcent()
-      // this.stats()
+      // this.getWinParcent()
+      this.stats()
     } else {
       this.squaresTarget.innerHTML += `<span class="square red"></span>`
       this.addSkipbutton();
@@ -257,14 +259,15 @@ export default class extends Controller {
       document.querySelector(`[data-button="${btn}"]`).click()
     }
   }
-
+  //cmg = current movie guess
   removeSearchSkip(cmg){
     if(cmg.length >= maxCount){
       localStorage.setItem("gameStatus", "failed")
       this.skipbuttonTarget && this.removeSkipButton()
       this.searchfieldTarget && this.searchfieldTarget.remove();
-      this.addMovieName()
-      this.addSocialIcons()
+      this.addMovieName();
+      this.addSocialIcons();
+      this.stats();
     }
   }
 
@@ -408,21 +411,37 @@ export default class extends Controller {
   }
   
   stats() {
+    let stats = JSON.parse(localStorage.getItem("stats"));
+    let gameStatus = localStorage.getItem("gameStatus");
     stats["gamesPlayed"] += 1
-    stats["gamesWon"] += 1
-    localStorage.setItem("stats",  JSON.stringify(stats))
-    let winParcentage = (stats["gamesPlayed"] / stats["gamesWon"]) * 100
-    document.getElementById("percent").innerHTML = winParcentage
-    document.getElementById("played-stat").innerHTML = stats["gamesPlayed"]
-    document.getElementById("won-stat").innerHTML = stats["gamesWon"]
-  }
-  getWinParcent(){
-    let stats = JSON.parse(localStorage.getItem("stats"))
-    
-    let winParcentage = (stats.gamesPlayed / stats.gamesWon) * 100
+    console.log(stats.currentStreak)
+    if(gameStatus === "completed"){
+      stats.currentStreak += 1
+      stats.gamesWon += 1
+      stats.maxStreak = Math.max(stats.maxStreak, stats.currentStreak)
+    }else if(gameStatus === "failed") {
+      stats.currentStreak = 0
+    }
+
+    let winParcentage = ((stats.gamesWon / stats.gamesPlayed) * 100).toFixed(2)
     document.getElementById("percent").innerHTML = winParcentage
     document.getElementById("played-stat").innerHTML = stats.gamesPlayed
     document.getElementById("won-stat").innerHTML = stats.gamesWon
+    document.getElementById("cstreak").innerHTML = stats.currentStreak
+    document.getElementById("mstreak").innerHTML = stats.maxStreak
+
+    localStorage.setItem("stats", JSON.stringify(stats));
+  }
+
+  getWinParcent(){
+    let stats = JSON.parse(localStorage.getItem("stats"))
+    
+    let winParcentage = ((stats.gamesWon / stats.gamesPlayed) * 100).toFixed(2)
+    document.getElementById("percent").innerHTML = winParcentage
+    document.getElementById("played-stat").innerHTML = stats.gamesPlayed
+    document.getElementById("won-stat").innerHTML = stats.gamesWon
+    document.getElementById("cstreak").innerHTML = stats.currentStreak
+    document.getElementById("mstreak").innerHTML = stats.maxStreak
   }
 
 }

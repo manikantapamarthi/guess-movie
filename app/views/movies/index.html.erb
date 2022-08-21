@@ -5,13 +5,13 @@
         <h1 class="title title-header">Cheppuko</h1>
       </div>
       <div class="header-icons d-flex align-items-center">
-        <%= link_to "#", "data-bs-toggle": "modal", "data-bs-target": "#archiveModal", class: "mr-4" do %>
+        <%= link_to "javascript:void(0)", "data-bs-toggle": "modal", "data-bs-target": "#archiveModal", class: "mr-4" do %>
           <i class="fas fa-calendar-days"></i>
         <% end %>
-        <%= link_to "#", "data-bs-toggle": "modal", "data-bs-target": "#statsModal", class: "mr-4" do %>
+        <%= link_to "javascript:void(0)", "data-bs-toggle": "modal", "data-bs-target": "#statsModal", class: "mr-4" do %>
           <i class="fas fa-chart-simple"></i>
         <% end %>
-        <%= link_to "#", "data-bs-toggle": "modal", "data-bs-target": "#howToPlay" do %>
+        <%= link_to "javascript:void(0)", "data-bs-toggle": "modal", "data-bs-target": "#howToPlay" do %>
           <i class="fas fa-circle-info"></i>
         <% end %>
       </div>
@@ -91,22 +91,33 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title" id="statsModalLabel">Stats</h6>
+        <h5 class="modal-title font-weight-bold" id="statsModalLabel">STATS</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="stats-bar">
-          <div class="played row">
-            <span class="bg-warning played-stat" id="played-stat"></span>
+        <div class="stats-bar d-flex justify-content-around offset-mb-3">
+          <div class="played row text-center">
+            <span id="played-stat" class="played-stat"></span>
             <span>played</span>
           </div>                                              
-          <div class="win row">
-            <span class="bg-success won-stat" id="won-stat"></span>
+          <div class="win row text-center" class="won-stat">
+            <span id="won-stat"></span>
             <span>won</span>
           </div>
-          <div class="percentage row">
+          <div class="percentage row text-center" class="win-per">
             <span id="percent"></span>
             <span>win%</span>
+          </div>
+        </div>
+        <div class="streak-bar d-flex justify-content-around mt-10">
+          <div class="text-center cstreak row">
+            <span id="cstreak"></span>
+            <span>Current Streak</span>
+          </div>
+          <div></div>
+          <div class="text-center mstreak row">
+            <span id="mstreak"></span>
+            <span>Best Streak</span>
           </div>
         </div>
       </div>
