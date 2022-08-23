@@ -395,11 +395,11 @@ export default class extends Controller {
 
   shareText() {
     let url = encodeURI(window.location)
-    let text = encodeURIComponent(`\nCheppuko Day ${this.day}: ${this.count}/5 \n`)
+    let text = encodeURIComponent(`Cheppuko Day ${this.day}: ${this.count}/5 \n`)
     let movieGuess = localStorage.getItem("currentMovieGuess")
     let squares = composeSquares(movieGuess, this.movieName);
-    let tag = encodeURIComponent(`\n #cheppuko`)
-    return url+text+squares+tag
+    let tag = encodeURIComponent(`\n #cheppuko\n`)
+    return text+squares+tag+url
   }
  
   updateGamesPlayed(){

@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-export const greenSquare = "🟩";
+export const greenSquare = "✅";
 
 export const redSquare = "🟥";
 
