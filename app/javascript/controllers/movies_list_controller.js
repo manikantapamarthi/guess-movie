@@ -1390,6 +1390,7 @@ export const movieNames = [
   "Yogi",
   "Yudda Bhoomi",
   "Yuddham Sharanam",
+  "Yuganiki Okkadu",
   "Yuvakudu",
   "Yuvaraju",
   "Zanjeer",
