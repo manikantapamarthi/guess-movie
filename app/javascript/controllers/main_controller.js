@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import { movieNames } from "./movies_list_controller"
-import { composeSquares,countDownTimer } from "./share_controller"
+import { composeSquares,countDownTimer,getConfetti } from "./share_controller"
 
 export const stats = {
   gamesPlayed: 0,
@@ -215,6 +215,7 @@ export default class extends Controller {
     localStorage.setItem("currentIndex",cI);
 
     if(movieMatch){
+      getConfetti()
       this.movieguessTarget.innerHTML += movieMatchHtml
       localStorage.setItem("gameStatus", "completed")
       this.skipbuttonTarget && this.removeSkipButton();
@@ -225,7 +226,7 @@ export default class extends Controller {
       this.movienameTarget.innerHTML = `<p>You got it - The answer was <span class="lawngreen">${this.movieName}</span></p>`
       countDownTimer(this.nextmovieTarget);
       this.addSocialIcons();
-      this.stats()
+      // this.stats()
     } else if (!movieMatch && parseInt(numberButtons) >= maxCount) {
       this.movieguessTarget.innerHTML += movieMatchHtml
       this.squaresTarget.innerHTML += `<span class="square red"></span>`
