@@ -131,10 +131,12 @@ body {
   margin-top: 25px;
   text-align: center;
 }
+
 .squares {
   display: flex;
   text-align: center;
 }
+
 .square {
   width: 10px;
   height: 10px;
@@ -142,6 +144,7 @@ body {
   padding: 10px;
   margin: 10px;
 }
+
 .red{
   background-color: #ff0000;
 }
@@ -149,9 +152,11 @@ body {
 .green{
   background-color: #00ff7f;
 }
+
 .table {
   color: #fff !important;
 }
+
 .movie-show{
   display: flex;
 }
@@ -161,15 +166,18 @@ body {
   cursor: pointer;
   align-items: center;
 }
+
 .active-frame {
   background-color: #363535;
   color: #fff;
 }
+
 @keyframes blink {
   50% {
     opacity: 0.0;
   }
 }
+
 .blink {
   animation: blink 1s step-start 0s infinite;
 }
