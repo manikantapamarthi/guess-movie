@@ -156,7 +156,7 @@ export const movieNames = [
   "Athadu",
   "Athaku Yamudu Ammayiki Mogudu",
   "Athanokkade",
-  "Atharintiki Daaredi",
+  "Atharintiki Daredi",
   "Athidhi",
   "Athili Sathibabu LKG",
   "Attack",
