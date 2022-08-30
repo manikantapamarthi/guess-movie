@@ -15,7 +15,7 @@ class Admin::MoviesController < ApplicationController
 
   def create
     @movie = Movie.new(movie_params)
-    mve = Movie.last.day
+    mve ||= Movie.count > 0 ? Movie.last.day : nil
     if mve.present?
       @movie.day = mve + 1
     else

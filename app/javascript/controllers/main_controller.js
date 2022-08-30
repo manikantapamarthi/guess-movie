@@ -7,7 +7,7 @@ export const stats = {
   gamesWon: 0
 }
 export const maxCount = 5
-export const SITE_URL = "cheppuko.herokuapp.com"
+export const SITE_URL = "cheppuko.onrender.com/"
 export default class extends Controller {
   static targets = ["skip", 
                     "buttoncount", 
