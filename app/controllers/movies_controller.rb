@@ -22,12 +22,7 @@ class MoviesController < ApplicationController
       format.html
     end
   end
-
-  # def search_movie
-  #   @movie_names = movie_names.select{|m| m.downcase.include? "#{params["q"]}".downcase}
-  #   render layout: false
-  # end
-
+  
   private
 
   def get_day
