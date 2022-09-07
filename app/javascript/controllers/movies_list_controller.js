@@ -1009,6 +1009,7 @@ export const movieNames = [
   "Pulimurugan",
   "Punnami Naagu",
   "Punya Bhoomi Naa Desam",
+  "Pushpa The Rise",
   "Quick Gun Murugun: Misadventures of an Indian Cowboy",
   "RDX Love",
   "Ra Ra Krishnayya",
