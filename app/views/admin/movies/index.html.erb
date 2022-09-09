@@ -11,6 +11,7 @@
           <td><%= m.title %></td>
           <td><%= m.day %></td>
           <td><%= link_to "show", admin_movie_path(m) %></td>
+          <td><%= link_to "Delete", admin_movie_path(m), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></td>
         </tr>
       <% end %>
     </tbody>

@@ -1,6 +1,6 @@
 class Admin::MoviesController < ApplicationController
 
-  
+  before_action :set_movie, only: [:show, :destroy, :publish]
   def new
     @movie = Movie.new
   end
@@ -10,7 +10,6 @@ class Admin::MoviesController < ApplicationController
   end
 
   def show
-    @movie = Movie.find(params[:id])
   end
 
   def create
@@ -29,13 +28,21 @@ class Admin::MoviesController < ApplicationController
     end
   end
 
+  def destroy
+    @movie.destroy
+    redirect_to admin_movies_path
+  end
+
   def publish
-    @movie = Movie.find(params[:id])
     @movie.update(publish: true)
     redirect_to admin_movie_path(params[:id]) 
   end
 
   private
+  def set_movie
+    @movie = Movie.find(params[:id])
+  end
+
   def movie_params
     params.require(:movie).permit(:hardest, :harder, :hard, :easy, :easiest, :title, :contributor)
   end
