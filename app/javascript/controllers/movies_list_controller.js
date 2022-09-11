@@ -182,6 +182,7 @@ export const movieNames = [
   "Babu Bangaram",
   "Bachchan",
   "Badri",
+  "Badra",
   "Badrinath",
   "Bahubali: The Beginning",
   "Bairavaa",
