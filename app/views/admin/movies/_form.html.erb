@@ -1,7 +1,7 @@
 <%= form_with model: [:admin, @movie] do |f| %>
   <div class="form-group">
     <%= f.label :title %>
-    <%= f.text_field :title, class: "form-control", direct_upload: true, placeholder: "Movie name" %>
+    <%= f.text_field :title, class: "form-control", direct_upload: true, placeholder: "Movie name", id: "movie-name" %>
   </div>
   <div class="form-group">
     <%= f.label :hardest %>

@@ -1,6 +1,6 @@
 class Admin::MoviesController < ApplicationController
 
-  before_action :set_movie, only: [:show, :destroy, :publish]
+  before_action :set_movie, only: [:show, :destroy, :publish, :edit, :update]
   def new
     @movie = Movie.new
   end
@@ -27,6 +27,16 @@ class Admin::MoviesController < ApplicationController
       render 'new'
     end
   end
+
+  def edit
+    
+  end
+
+  def update
+    @movie.update(movie_params)
+    redirect_to admin_movie_path(params[:id])
+  end
+  
 
   def destroy
     @movie.destroy
