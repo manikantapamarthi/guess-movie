@@ -210,6 +210,7 @@ export const movieNames = [
   "Bhaagamathie",
   "Bhadra",
   "Bhageeratha",
+  "Bharateeyudu",
   "Bhai",
   "Bhairava Dweepam",
   "Bhairava Geetha",
