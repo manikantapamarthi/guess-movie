@@ -1061,6 +1061,7 @@ export const movieNames = [
   "Ramudu Bheemudu",
   "Ranam",
   "Ranarangam",
+  "Rangam",
   "Ranga (S.S.L.C)",
   "Rangasthalam",
   "Rangula Raatnam",
