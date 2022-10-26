@@ -54,6 +54,6 @@ class Admin::MoviesController < ApplicationController
   end
 
   def movie_params
-    params.require(:movie).permit(:hardest, :harder, :hard, :easy, :easiest, :title, :contributor)
+    params.require(:movie).permit(:hardest, :harder, :hard, :easy, :easiest, :title, :contributor, :day)
   end
 end
