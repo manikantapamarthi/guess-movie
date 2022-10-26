@@ -27,6 +27,10 @@
     <%= f.label :contributor %>
     <%= f.text_field :contributor, class: "form-control", placeholder: "Ex: TomCruise" %>
   </div>
+  <% if params[:action] == "edit" %>
+    <%= f.label :day %>
+    <%= f.number_field :day, class: "form-control"%>
+  <% end %>
   <div class="form-group text-center mt-10">
     <%= f.submit "Submit", class: "btn btn-primary" %>
   </div>
