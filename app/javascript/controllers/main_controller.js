@@ -177,7 +177,7 @@ export default class extends Controller {
         input: {
           selection: (event) => {
             const selection = event.detail.selection.value;
-            autoCompleteJS.input.value.toLowerCase() = selection.toLowerCase();
+            autoCompleteJS.input.value = selection;
             this.autocomplete(event);
             autoCompleteJS.input.value = '';
           }
