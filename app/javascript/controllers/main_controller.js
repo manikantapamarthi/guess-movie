@@ -174,7 +174,7 @@ export default class extends Controller {
         maxResults: -1
       },
       resultItem: {
-        highlight: true,
+        highlight: true
       },
       events: {
         input: {
