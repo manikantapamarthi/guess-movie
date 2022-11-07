@@ -170,14 +170,8 @@ export default class extends Controller {
         src: movieNames,
         cache: true
       },
-      resultsList: {
-        maxResults: -1
-      },
       resultItem: {
         highlight: true,
-      },
-      resultsList: {
-        maxResults: -1
       },
       events: {
         input: {
