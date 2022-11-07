@@ -1355,6 +1355,7 @@ export const movieNames = [
   "Vijayendra Varama",
   "Vijetha",
   "Vikram",
+  "Vikram Hit List",
   "Vikramarkudu",
   "Village lo Vinayakudu",
   "Vinara sodara veera kumara",

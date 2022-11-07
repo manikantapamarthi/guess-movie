@@ -176,6 +176,9 @@ export default class extends Controller {
       resultItem: {
         highlight: true,
       },
+      resultsList: {
+        maxResults: -1
+      },
       events: {
         input: {
           selection: (event) => {
