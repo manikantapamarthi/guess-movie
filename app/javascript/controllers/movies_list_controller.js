@@ -923,7 +923,7 @@ export const movieNames = [
   "Padamati Sandhya Ragam",
   "Padi Padi Leche Manasu",
   "Padmavyuham",
-  "Paaga",
+  "Paagal",
   "Pailwan",
   "Paisa Vasool",
   "Paisa",
