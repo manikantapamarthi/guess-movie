@@ -6,7 +6,7 @@ class Admin::MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.order(day: :desc)
+    @movies = Movie.order(day: :desc).last(7)
   end
 
   def show

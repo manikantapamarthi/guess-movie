@@ -43,28 +43,33 @@ export const countDownTimer = (nextmovie) => {
 }
 
 export const getConfetti = () => {
-  var end = Date.now() + (15 * 1000);
-  // go Buckeyes!
-  var colors = ['#bb0000', '#ffffff'];
-
-  (function frame() {
+  var defaults = {
+    spread: 360,
+    ticks: 50,
+    gravity: 0,
+    decay: 0.94,
+    startVelocity: 30,
+    shapes: ['star'],
+    colors: ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8']
+  };
+  
+  function shoot() {
     confetti({
-      particleCount: 2,
-      angle: 60,
-      spread: 55,
-      origin: { x: 0 },
-      colors: colors
+      ...defaults,
+      particleCount: 40,
+      scalar: 1.2,
+      shapes: ['star']
     });
+  
     confetti({
-      particleCount: 2,
-      angle: 120,
-      spread: 55,
-      origin: { x: 1 },
-      colors: colors
+      ...defaults,
+      particleCount: 10,
+      scalar: 0.75,
+      shapes: ['circle']
     });
-
-    if (Date.now() < end) {
-      requestAnimationFrame(frame);
-    }
-  }());
+  }
+  
+  setTimeout(shoot, 0);
+  setTimeout(shoot, 100);
+  setTimeout(shoot, 200);
 }
